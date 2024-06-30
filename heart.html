@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romantic Love Form with Flower Emoji Background</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa; /* Light gray background */
+    overflow: hidden; /* Hide overflow to keep background fixed */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='1em' font-size='50'%3E%F0%9F%8C%B8%3C/text%3E%3C/svg%3E");
+  }
+
+  .heart-btn {
+    background-color: #ff4b2b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .heart-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .form-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 300px; /* Adjust width as needed */
+    text-align: center; /* Center align content */
+  }
+
+  .form-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+  }
+
+  .form-container input[type="text"] {
+    width: calc(100% - 22px); /* Adjust input width to fit within padding */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box; /* Ensure padding doesn't increase input width */
+  }
+
+  /* Modal styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* Semi-transparent black background */
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Heart emoji style */
+  .heart-emoji {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  /* Poem styles */
+  .poem {
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Animation for flying heart */
+  @keyframes flyHeart {
+    0% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-50px) rotate(360deg);
+    }
+    100% {
+      transform: translateY(-100px) rotate(720deg);
+    }
+  }
+
+  .flying-heart {
+    position: absolute;
+    z-index: 999;
+    font-size: 24px;
+    color: #ff4b2b;
+    animation: flyHeart 1s ease-out;
+  }
+</style>
+</head>
+<body>
+<!-- Modal for poem -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="heart-emoji">❤️</div>
+    <h2>Cute Poem for You!</h2>
+    <div id="poemContent" class="poem"></div>
+  </div>
+</div>
+
+<!-- Form container -->
+<div class="form-container" id="formContainer">
+  <form id="loveForm">
+    <label for="nameInput">What's your name?</label>
+    <input type="text" id="nameInput" name="name" required>
+    <button type="submit" class="heart-btn">❤️</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('loveForm');
+    var modal = document.getElementById('myModal');
+    var poemContent = document.getElementById('poemContent');
+
+    // Handle form submission
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+      var name = document.getElementById('nameInput').value.trim();
+      if (name !== '') {
+        // Create flying heart element
+        var heart = document.createElement('div');
+        heart.className = 'flying-heart';
+        heart.innerHTML = '❤️';
+        document.body.appendChild(heart);
+
+        // Remove flying heart after animation
+        heart.addEventListener('animationend', function() {
+          heart.parentNode.removeChild(heart);
+        });
+
+        // Poem to display in modal
+        var poem = `I've never been the type to say what I feel<br>
+          So basically I keep everything inside<br>
+          And with you, ${name}, it was no different<br>
+          I want to tell you, believe me I've tried<br><br>
+
+          But there's part of me that just can't take that chance<br>
+          So I doubt that you'll ever know<br>
+          Which may be fine with you, but it's hurting me<br>
+          I choose not to show it though<br><br>
+
+          I guess I'm your secret admirer<br>
+          That name seems to fit just right<br>
+          I don't know what I like about you<br>
+          But you're on my mind, day and night<br><br>
+
+          Maybe it's the way you look<br>
+          So sexy I can't get enough<br>
+          Or how you make me feel when you come around<br>
+          I instantly forget all other stuff<br><br>
+
+          Maybe it's the way you say my name<br>
+          Or maybe it's the way you smile<br>
+          Then again, it might just be everything<br>
+          Getting to know you seems worth my while<br><br>
+
+          But I guess I'll never know what it is<br>
+          My true feelings I could never reveal to you<br>
+          I'll just admire you from a distance<br>
+          I'm not sure what else there is to do`;
+
+        // Show poem in modal after animation
+        setTimeout(function() {
+          poemContent.innerHTML = poem;
+          modal.style.display = 'flex'; // Show poem modal
+        }, 1000); // Adjust timing to match animation duration
+      }
+    });
+
+    // Close poem modal when close button is clicked
+    var closeBtn = modal.querySelector('.close');
+    closeBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+
+    // Close poem modal when clicking outside of it
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
